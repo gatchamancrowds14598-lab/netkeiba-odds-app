@@ -147,9 +147,12 @@ if st.button("取得開始", type="primary", use_container_width=True):
         status_text = st.empty()
         
         try:
+            # スマホ版URLをPC版URLに自動変換
+            fixed_url = start_url.replace("race.sp.netkeiba.com", "race.netkeiba.com").replace("sp.netkeiba.com", "netkeiba.com")
+            
             status_text.text("ブラウザを起動中...")
             driver = setup_browser()
-            driver.get(start_url)
+            driver.get(fixed_url)
             time.sleep(3)
             
             # 結果を格納する辞書
