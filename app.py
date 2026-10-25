@@ -150,6 +150,9 @@ if st.button("取得開始", type="primary", use_container_width=True):
             # スマホ版URLをPC版URLに自動変換
             fixed_url = start_url.replace("race.sp.netkeiba.com", "race.netkeiba.com").replace("sp.netkeiba.com", "netkeiba.com")
             
+            # ★確認用：変換されたURLを画面に青い枠で表示する
+            st.info(f"✅ 以下のPC用URLに変換してアクセスします:\n{fixed_url}")
+            
             status_text.text("ブラウザを起動中...")
             driver = setup_browser()
             driver.get(fixed_url)
