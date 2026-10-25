@@ -147,11 +147,16 @@ if st.button("取得開始", type="primary", use_container_width=True):
         status_text = st.empty()
         
         try:
-            # スマホ版URLをPC版URLに自動変換
-            fixed_url = start_url.replace("race.sp.netkeiba.com", "race.netkeiba.com").replace("sp.netkeiba.com", "netkeiba.com")
-            
-            # ★確認用：変換されたURLを画面に青い枠で表示する
-            st.info(f"✅ 以下のPC用URLに変換してアクセスします:\n{fixed_url}")
+            import re
+            # URLから12桁のレースIDを抽出して、正しいPC用URLを強制生成
+            match = re.search(r"race_id=(\d{12})", start_url)
+            if match:
+                race_id = match.group(1)
+                fixed_url = f"https://race.netkeiba.com/odds/index.html?type=b0&race_id={race_id}"
+                st.info(f"✅ レースID「{race_id}」を検知。以下のPC用URLで取得します:\n{fixed_url}")
+            else:
+                fixed_url = start_url
+                st.warning("⚠️ レースIDが抽出できませんでした。入力されたURLのまま試行します。")
             
             status_text.text("ブラウザを起動中...")
             driver = setup_browser()
